@@ -1,70 +1,27 @@
-from asyncio import new_event_loop
-
-
-class Node:
-    def __init__(self,data,next = None , prev = None):
-        self.data = data
-        self.next = next
-        self.prev = prev
-        
-class DLL:
-    def __init__(self):
-        self.head = None
-     
-    def apppend(self,new_data):
-        last = self.head
-        new_node = Node(new_data)
-        new_node.next = None
-        if self.head is None:
-            new_node.prev = None
-            self.head = new_node
-            return
-        
-        while(last.next is not None):
-            last = last.next
-        last.next = new_node
-        new_node.prev = last
-        return
-             
-    def push(self,new_data):
-        new_node = Node(new_data)
-        if self.head is None:
-            self.apppend(new_data)
-            return
+nums = [-1,0,1,2,-1,-4]
+nums.sort()
+n = len(nums)
+ans = []
+for i in range(0, len(nums)-2):
+    a = i
+    if a==0 or (a>0 and nums[i]!=nums[i-1]):
+        b = i+1
+        c = n-1
+        val = 0-(nums[i])
+    while b<c:
+        if (nums[b] + nums[c])==val:
+            tri = []
+            tri.append(nums[a])
+            tri.append(nums[b])
+            tri.append(nums[c])
+            ans.append(tri)
+            while b<c and nums[b] == nums[b+1]:
+                b=b+1
+            while b<c and nums[c]== nums[c-1]:
+                c = c-1
+            b=b+1
+            c=c-1
+        elif (nums[b] + nums[c])<val:
+            b = b +1
         else:
-            new_node.next = self.head
-            new_node.prev = None
-            self.head = new_node
-            return
-    def AfterNode(self ,data , prev_data):
-        if prev_data == None:
-            print('Provide the previous Node data')
-            return
-        temp = self.head
-        new_node = Node(data)
-        while temp:
-            if temp.data == prev_data:
-                new_node.next = temp.next
-                temp.next = new_node
-                new_node.prev = temp
-                break
-            temp = temp.next
-            
-    def printDLL(self):
-        temp = self.head
-        if self.head == None:
-            print('Empty List')
-            return
-        while temp is not None:
-            print(temp.data)
-            temp = temp.next
-
-
-dll = DLL()
-dll.apppend(12)
-dll.apppend(34)
-dll.apppend(123)
-dll.push(11)
-dll.AfterNode(1000,34)
-dll.printDLL() 
-             
+            c=c-1
